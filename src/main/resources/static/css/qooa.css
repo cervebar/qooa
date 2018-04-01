@@ -2,6 +2,38 @@ div{
 border: 1px solid blue
 }
 
+.qs1 {
+  flex: 1;
+  max-width: 50px;
+}
+.qs2 {
+  flex: 2;
+}
+
+.qs-voteCount{
+display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-home{
+display: flex;
+  flex-direction: row;
+  align-items:  baseline
+}
+
+.panels-center{
+ flex-direction: row;
+ display: flex;
+}
+
+.panel-left{
+flex: 1;
+}
+.panel-right{
+width: 300px
+}
+
 .HolyGrail-body {
   display: flex;
   flex-direction: column;

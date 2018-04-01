@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
- <body>
-  <div id="page" layout:fragment="content">
-  
-  <div>This is home page content</div>
-
-<table>
-   <th:block th:each="question : ${questions}">
-      <div class="question-home">
-        <div class="qs1" >
-           <span class="qs-voteCount" th:text="${question.voteCount}"></span>
-        </div>
-        <div class="qs2">
-        <h2> <a  th:href="@{|/questions/${question.id}/|}" th:text="${question.title}"></a></h2>
-         <p th:text="${question.content}"></p>
-         <span th:text="${question.createdOn}"></span>
-        </div>
+   <body>
+      <div id="page" layout:fragment="content">
+         <div class="panels-center">
+            <div class="panel-left">
+               <div>This is home page content</div>
+               <table>
+                  <th:block th:each="question : ${questions}">
+                     <div class="question-home">
+                        <div class="qs1" >
+                           <span class="qs-voteCount" th:text="${question.voteCount}"></span>
+                        </div>
+                        <div class="qs2">
+                           <h2> <a  th:href="@{|/questions/${question.id}/|}" th:text="${question.title}"></a></h2>
+                           <p th:text="${question.content}"></p>
+                           <span th:text="${question.createdOn}"></span>
+                        </div>
+                     </div>
+                  </th:block>
+               </table>
+            </div>
+            <div class="panel-right">
+              <a  th:href="@{/questions/ask}" th:text="${lang}"></a>
+            </div>
+         </div>
       </div>
-   </th:block>
-</table>
-</div>
- </body>
+   </body>
 </html>
