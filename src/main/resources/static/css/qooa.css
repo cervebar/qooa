@@ -11,36 +11,7 @@ border: 1px solid blue
   order: -1;
 }
 
-.HolyGrail-ads {
-  min-width: 300px;
-  flex: 2;
-}
-
-.question-home{
-display: flex;
-  flex-direction: row;
-  align-items:  baseline
-}
-
-//question ---------------------------------
-
-.qs1 {
-  flex: 1;
-  max-width: 50px;
-}
-.qs2 {
-  flex: 2;
-}
-
-.qs-voteCount{
-display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-// --------------------------------------------
-
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .HolyGrail-body {
     flex-direction: row;
     flex: 1;
