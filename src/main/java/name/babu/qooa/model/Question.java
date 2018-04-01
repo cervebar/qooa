@@ -22,8 +22,9 @@ public class Question {
   // private String byte[]; other content in protobuf? images
   private long createdOn;
   
-  // TODO 
-  private int voteCount;
+  private long voteCount;
+  
+  //TODO
   private int answers;
   
   @ManyToMany
@@ -31,7 +32,7 @@ public class Question {
   
   public Question() {}
 
-  public Question(String id, String title, String content, Long createdOn, int voteCount, int answers, List<Tag> tags) {
+  public Question(String id, String title, String content, Long createdOn, long voteCount, int answers, List<Tag> tags) {
     this.id = id;
     this.title = title;
     this.content = content;
@@ -48,9 +49,8 @@ public class Question {
   public void setCreatedOn(Date createdOn) {
     this.createdOn = createdOn.getTime();
   }
-
+  
   // author
-  // upvotes
   // tags
   // rules
   // updated,was edited

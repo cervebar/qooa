@@ -6,12 +6,9 @@
         <div class="panels-center">
             <div class="panel-left">
                 <div>This is home page content</div>
-                
-                TODO question form 
-                <form action="#" th:action="@{/ask}" th:object="${question}" method="post">
+                <form action="#" th:action="@{/ask}" th:object="${question}" method="post" id="ask-question-form">
                    <p>Title: <input type="text" th:field="*{title}" /></p>
-                   <p>Id: <input type="text" th:field="*{id}" /></p>
-                   <p>Message: <input type="text" th:field="*{content}" /></p>
+                   <textarea th:field="*{content}" form="ask-question-form"></textarea>
                    <p><input type="submit" value="Submit" /></p>
                 </form>
             </div>

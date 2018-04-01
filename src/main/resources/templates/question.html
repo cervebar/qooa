@@ -1,20 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
- <body>
-  <div id="page" layout:fragment="content">
-<table>
-<th>
-      <tr>
-         <td th:text="${question.title}">...</td>
-         <td th:text="${question.content}">...</td>
-      </tr>
-      kvak
-      <tr>
-         <td colspan="2" th:text="${question.createdOn}">...</td>
-      </tr>
-   </th>
-</table>
-
-  </div>
- </body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/middle">
+   <body>
+      <div layout:fragment="middle-left-center">
+         <div class="qa-wrapper">
+            <div class="qa-upvotes">
+               <table>
+                  <tr>
+                     <td><button><i class="fas fa-chevron-up"></i></button></td>
+                  </tr>
+                  <tr>
+                     <td th:text="${question.voteCount}"></td>
+                  </tr>
+                  <tr>
+                     <td><button><i class="fas fa-chevron-down"></i></button></td>
+                  </tr>
+               </table>
+            </div>
+            <div class="qa-content">
+               <table>
+                  <th>
+                  <tr>
+                     <td th:text="${question.title}"></td>
+                     <td th:text="${question.content}"></td>
+                  </tr>
+                  kvak
+                  <tr>
+                     <td colspan="2" th:text="${question.createdOn}">...</td>
+                  </tr>
+                  </th>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div layout:fragment="middle-right-center">
+         kvak
+      </div>
+   </body>
 </html>

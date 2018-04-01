@@ -1,6 +1,42 @@
-div{
-border: 1px solid blue
+<!-- div{ border: 1px solid blue } -->
+
+/* header ------------------------------ */
+.h {
+   display: flex;
 }
+
+@media (min-width: 768px) {
+  .h {
+    flex-direction: row;
+    flex: 1;
+  }
+  .h-left, .h-right {
+    /* 12em is the width of the columns */
+    flex: 0 0 12em;
+  }
+  .h-left a{
+    justify-content: flex-end;
+    display: flex;
+  }
+  .h-center{
+    flex: 1;
+    align-items: center;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .h-center-left{
+  flex:1;
+  }
+  
+  /* default css ------------------------ */
+  .menu-item {
+    margin: 15px;
+  }
+}
+
+/* question detail ---------------------- */
 
 .qs1 {
   flex: 1;
@@ -70,3 +106,46 @@ width: 300px
     flex: 0 0 12em;
   }
 }
+
+/* mini profile center right ----------------------------------------------------- */
+
+.icons{
+  font-size:1.5em;
+  color:grey;
+}
+.icons svg{
+  margin-left: 15px;
+}
+
+#user-mini-img{
+  border-radius: 20%;
+  width: 30px;
+  margin-right: 5px;
+  margin-left: 15px;
+}
+#mini-reputation{
+  font-size: small;
+}
+
+#mini-profile{
+  display: flex;
+  align-items: center;
+}
+
+.h {
+   border-bottom: 1px solid grey;
+}
+
+/* q: question view ----------------------------------------------------- */
+.qa-wrapper{
+   display: flex;
+}
+.qa-upvotes{
+   width: 80px;
+   text-align: center;
+}
+.qa-upvotes table{
+    margin: auto;
+}
+
+

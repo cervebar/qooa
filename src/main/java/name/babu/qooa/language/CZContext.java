@@ -8,6 +8,9 @@ public class CZContext extends LanguageContext {
 
   public CZContext() {
     this.askButtonText = "zeptat se";
+    this.questionsText = "Otázky";
+    this.topicsText = "Téma";
+    this.usersText = "Komunita";
   }
 
 }

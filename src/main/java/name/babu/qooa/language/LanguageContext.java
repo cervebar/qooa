@@ -9,5 +9,8 @@ import lombok.Data;
 public class LanguageContext {
 
   protected String askButtonText;
+  protected String questionsText;
+  protected String topicsText;
+  protected String usersText;
 
 }

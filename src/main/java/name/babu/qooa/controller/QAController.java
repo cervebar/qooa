@@ -1,5 +1,8 @@
 package name.babu.qooa.controller;
 
+import java.util.Base64;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import name.babu.qooa.language.LanguageService;
 import name.babu.qooa.model.Question;
+import name.babu.qooa.model.forms.Upvote;
 import name.babu.qooa.repository.QARepository;
 import name.babu.qooa.skin.SkinService;
 
@@ -41,14 +44,19 @@ public class QAController {
   public String questionDetail(@PathVariable String questionId, Model model) {
     model.addAttribute("question", qas.findOne(questionId));
     addContextInfo(model);
+    model.addAttribute("upvote", new Upvote());
     return "question";
   }
 
+  @GetMapping("questions")
+  public String questions(@PageableDefault Pageable pageable,
+                          Model model) {
+    return home(pageable, model);
+  }
+
   @RequestMapping("")
-  public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name,
-                         @PageableDefault Pageable pageable, Model model) {
+  public String home(@PageableDefault Pageable pageable, Model model) {
     Page<Question> questions = qas.findAll(pageable);
-    model.addAttribute("message", name);
     model.addAttribute("questions", questions);
     addContextInfo(model);
     return "home";
@@ -63,17 +71,25 @@ public class QAController {
 
   @PostMapping("ask")
   public ModelAndView createQuestion(@ModelAttribute Question question) {
-    System.out.println(question);
-    // TODO hash id
-    // return error if title already exists
-    // TODO create on
-    String questionId = "headline1";
-    return new ModelAndView("redirect:/questions/" + questionId);
+    // TODO hash id nejak rozumneji id
+    byte[] encodedBytes = Base64.getEncoder().encode(question.getTitle().getBytes());
+    String id = new String(encodedBytes);
+    question.setId(id);
+    question.setCreatedOn(new Date());
+    qas.save(question);
+
+    // TODO return error if title already exists
+
+    // TODO tags
+
+    return new ModelAndView("redirect:/questions/" + id);
   }
 
+  // TODO annotace, session?
   private void addContextInfo(Model model) {
     model.addAttribute("lang", lang.getContext());
     model.addAttribute("skin", skin.getSkin());
+    // model.addAttribute("user", skin.getSkin());// user.mini-reputation
   }
 
 }

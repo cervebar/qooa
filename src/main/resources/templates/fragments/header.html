@@ -1,3 +1,16 @@
-<head th:fragment="header">
-<div>header TODO</div>
-</head>
+<div class="h" th:fragment="header">
+<div class="h-left">
+     <a href="/"><img th:src="@{|/skins/${skin}/img/logo.png|}" alt="logo" width="42" height="42" border="0"></img></a>
+</div>
+<div class="h-center">
+   <span class="h-center-left">
+      <span class="menu-item" ><a href="/questions" th:text="${lang.questionsText}"></a></span>
+      <span class="menu-item"><a href="/topics" th:text="${lang.topicsText}"></a></span>
+      <span class="menu-item"><a href="/users" th:text="${lang.usersText}"></a></span>
+   </span>
+   <span class="h-center-right">
+      <span th:replace="fragments/mini-profile::mini-profile"></span>
+   </span>
+</div>
+<div class="h-right"></div>
+</div>
