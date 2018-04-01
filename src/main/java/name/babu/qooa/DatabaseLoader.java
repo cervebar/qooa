@@ -59,9 +59,11 @@ public class DatabaseLoader implements CommandLineRunner {
     tags2.add(t1);
 
     this.qas
-        .save(new Question("headline", "*some markdown content* heh", Instant.now().toEpochMilli(), 12, 3, tags1));
+        .save(new Question("headline1", "headline", "*some markdown content* heh", Instant.now().toEpochMilli(),
+            12, 3, tags1));
     this.qas
-        .save(new Question("headline2 a jeste k tomu tohle max XYZ znaku", "*some markdown content* heh",
+        .save(new Question("headline2", "headline2 a jeste k tomu tohle max XYZ znaku",
+            "*some markdown content* heh",
             Instant.now().toEpochMilli(), 2, 2, tags2));
 
 		SecurityContextHolder.clearContext();

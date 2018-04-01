@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -17,7 +16,7 @@ import lombok.Data;
 @Entity
 public class Question {
 
-  private @Id @GeneratedValue Long id;
+  private @Id String id;
   private String title;
   private String content;// markdown
   // private String byte[]; other content in protobuf? images
@@ -30,9 +29,10 @@ public class Question {
   @ManyToMany
   private List<Tag> tags;
   
-  private Question() {}
+  public Question() {}
 
-  public Question(String title, String content, Long createdOn, int voteCount, int answers, List<Tag> tags) {
+  public Question(String id, String title, String content, Long createdOn, int voteCount, int answers, List<Tag> tags) {
+    this.id = id;
     this.title = title;
     this.content = content;
     this.createdOn = createdOn;

@@ -8,9 +8,11 @@
                 <div>This is home page content</div>
                 
                 TODO question form 
-                <form action="#" th:action="@{/ask}" th:object="${askQuestion}" method="post">
-                <input type="text" th:field="*{datePlanted}" />
-                <input type="submit" id="doUpdate" name="_eventId_updateData" value="Update now!" />
+                <form action="#" th:action="@{/ask}" th:object="${question}" method="post">
+                   <p>Title: <input type="text" th:field="*{title}" /></p>
+                   <p>Id: <input type="text" th:field="*{id}" /></p>
+                   <p>Message: <input type="text" th:field="*{content}" /></p>
+                   <p><input type="submit" value="Submit" /></p>
                 </form>
             </div>
             <div class="panel-right">

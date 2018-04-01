@@ -6,9 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import name.babu.qooa.language.LanguageService;
 import name.babu.qooa.model.Question;
@@ -33,8 +37,8 @@ public class QAController {
     this.skin = skin;
   }
 
-  @RequestMapping("questions/{questionId}")
-  public String questionDetail(@PathVariable long questionId, Model model) {
+  @GetMapping("questions/{questionId}")
+  public String questionDetail(@PathVariable String questionId, Model model) {
     model.addAttribute("question", qas.findOne(questionId));
     addContextInfo(model);
     return "question";
@@ -50,10 +54,21 @@ public class QAController {
     return "home";
   }
 
-  @RequestMapping("ask")
+  @GetMapping("ask")
   public String ask(Model model) {
     addContextInfo(model);
+    model.addAttribute("question", new Question());
     return "ask-question";
+  }
+
+  @PostMapping("ask")
+  public ModelAndView createQuestion(@ModelAttribute Question question) {
+    System.out.println(question);
+    // TODO hash id
+    // return error if title already exists
+    // TODO create on
+    String questionId = "headline1";
+    return new ModelAndView("redirect:/questions/" + questionId);
   }
 
   private void addContextInfo(Model model) {
