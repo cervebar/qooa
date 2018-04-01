@@ -1,6 +1,5 @@
 package name.babu.qooa.language;
 
-
 /**
  * XXX TODO create javadoc
  * temporary class

@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import name.babu.qooa.language.CZContext;
-import name.babu.qooa.language.LanguageContext;
+import name.babu.qooa.language.LanguageService;
 import name.babu.qooa.repository.QARepository;
+import name.babu.qooa.skin.SkinService;
 
 /**
  * XXX TODO create javadoc
@@ -18,24 +18,32 @@ import name.babu.qooa.repository.QARepository;
 public class QAController {
 
   private final QARepository qas;
-  private final LanguageContext languageContext = new CZContext();// TODO
+  private final LanguageService lang;
+  private final SkinService skin;
 
   @Autowired
-  public QAController(QARepository qas) {
+  public QAController(QARepository qas, LanguageService lang, SkinService skin) {
     this.qas = qas;
+    this.lang = lang;
+    this.skin = skin;
   }
 
   @RequestMapping("{questionId}")
   public String questionDetail(@PathVariable long questionId, Model model) {
     model.addAttribute("question", qas.findOne(questionId));
-    model.addAttribute("lang", "ble");
+    addContextInfo(model);
     return "question";
   }
 
   @RequestMapping("ask")
   public String ask(@PathVariable long questionId, Model model) {
-    model.addAttribute("lang", languageContext);
+    addContextInfo(model);
     return "question-ask";
+  }
+
+  private void addContextInfo(Model model) {
+    model.addAttribute("lang", lang.getContext());
+    model.addAttribute("skin", skin.getSkin());
   }
 
 }
