@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragments/head::head"></head>
+<body>
+   <div class="HollyGrail">
+     <div th:replace="fragments/header::header"></div>
+     <div class="HolyGrail-body">
+        <div class="HolyGrail-content" layout:fragment="content"></div>
+        <div class="HolyGrail-nav" layout:fragment="leftpanel"></div>
+        <div class="HolyGrail-ads" layout:fragment="rightpanel"></div>
+      </div>
+     <div th:replace="fragments/footer::footer"></div>
+   </div>
+</body>
+</html>
