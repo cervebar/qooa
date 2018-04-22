@@ -17,7 +17,10 @@ package name.babu.qooa;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,20 +28,31 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import name.babu.qooa.model.Question;
+import name.babu.qooa.model.Role;
 import name.babu.qooa.model.Tag;
+import name.babu.qooa.model.User;
 import name.babu.qooa.repository.QARepository;
+import name.babu.qooa.repository.RoleRepository;
 import name.babu.qooa.repository.TagRepository;
+import name.babu.qooa.service.UserService;
 
+/**
+ * TODO : move test login into profile
+ */
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
   private final QARepository qas;
   private final TagRepository tagr;
+  private final UserService userrep;
+  private final RoleRepository rolrep;
 
 	@Autowired
-  public DatabaseLoader(QARepository qas, TagRepository tagr) {
+  public DatabaseLoader(QARepository qas, TagRepository tagr, UserService userrep, RoleRepository rolrep) {
     this.qas = qas;
     this.tagr = tagr;
+    this.userrep = userrep;
+    this.rolrep = rolrep;
 	}
 
 	@Override
@@ -65,6 +79,22 @@ public class DatabaseLoader implements CommandLineRunner {
         .save(new Question("headline2", "headline2 a jeste k tomu tohle max XYZ znaku",
             "*some markdown content* heh",
             Instant.now().toEpochMilli(), 2, 2, tags2));
+
+
+    Role role = new Role();
+    role.setName("user");
+    Set<User> users = new HashSet<>();
+    role.setUsers(users);
+    this.rolrep.saveAndFlush(role);
+
+    Role saved = rolrep.findByName("user");
+
+    Set<Role> set = new HashSet<>(Arrays.asList(saved));
+    User u = new User();
+    u.setPassword("b");
+    u.setUsername("a");
+    u.setRoles(set);
+    this.userrep.save(u);
 
 		SecurityContextHolder.clearContext();
 	}

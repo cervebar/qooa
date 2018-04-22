@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <body>
+        <div th:if="${error}">
+            Registration didn't succeeeded:
+            <ul>
+            <th:block th:each="er : ${error}">
+               <li class="error-message-line" th:text="${er}"></li>
+            </th:block>
+            </ul>
+        </div>
+        <form th:action="@{/registration}" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><label> Password confirm: <input type="password" name="passwordConfirm"/> </label></div>
+            <div><input type="submit" value="Register"/></div>
+        </form>
+    </body>
+</html>
