@@ -2,18 +2,18 @@ package name.babu.qooa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import name.babu.qooa.model.User;
+import name.babu.qooa.model.DTOUser;
 
 /**
  * XXX TODO create javadoc
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<DTOUser, Long> {
 
-  User findByUsername(String username);
+  DTOUser findByUsername(String username);
 
   @Override
-  User save(User tag);
+  DTOUser save(DTOUser tag);
 
-  User findByEmail(String email);
+  DTOUser findByEmail(String email);
 
 }

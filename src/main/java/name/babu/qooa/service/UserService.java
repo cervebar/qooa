@@ -1,10 +1,10 @@
 package name.babu.qooa.service;
 
-import name.babu.qooa.model.User;
+import name.babu.qooa.model.DTOUser;
 
 public interface UserService {
 
-  void save(User user);
+  void save(DTOUser user);
 
-  User findByUsername(String username);
+  DTOUser findByUsername(String username);
 }

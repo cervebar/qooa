@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import name.babu.qooa.model.User;
+import name.babu.qooa.model.DTOUser;
 import name.babu.qooa.service.UserService;
 
 @Component
@@ -23,12 +23,12 @@ public class RegistrationValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+        return DTOUser.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        User user = (User) o;
+        DTOUser user = (DTOUser) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
     if (user.getUsername().length() < MIN_USERNAME_LENGH || user.getUsername().length() > MAX_USERNAME_LENGH) {
             errors.rejectValue("username", "Size.userForm.username");

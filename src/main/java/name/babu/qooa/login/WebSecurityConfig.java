@@ -13,45 +13,44 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userDetailsService;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Autowired
+  private UserDetailsService userDetailsService;
+  @Autowired
+  private SimpleAuthenticationSuccessHandler successHandler;
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                    .antMatchers("/resources/**", "/registration").permitAll()
-//                    .anyRequest().authenticated()
-//                    .and()
-//                .formLogin()
-//                    .loginPage("/login")
-//                    .permitAll()
-//                    .and()
-//                .logout()
-//                    .permitAll();
-//    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable() //TODO resolve this
-            .headers().frameOptions().sameOrigin().and() //TODO solve this
-            .authorizeRequests()
-                .antMatchers("/home", "/registration").permitAll()
-                .antMatchers("/h2-console/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll();
-    }
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable() // TODO resolve this
+        .headers().frameOptions().sameOrigin().and() // TODO solve this
+        .authorizeRequests()
+          .antMatchers("/h2-console/*")
+            .permitAll()
+            .antMatchers("/", "/home", "/login", "/logout", "/error", "/registration")
+            .permitAll()
+          .antMatchers("/css/**")
+            .permitAll()
+           .antMatchers("/skins/**")
+            .permitAll()
+          .antMatchers("/tmp/**")
+            .permitAll()
+          .anyRequest()
+            .authenticated()
+            .and()
+          .formLogin()
+            .loginPage("/login")
+            .successHandler(successHandler)
+            .permitAll()
+            .and()
+          .logout()
+            .logoutSuccessUrl("/home")
+            .permitAll();
+  }
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

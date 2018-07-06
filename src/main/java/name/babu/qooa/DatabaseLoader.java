@@ -30,7 +30,7 @@ import name.babu.qooa.model.Privilege;
 import name.babu.qooa.model.Question;
 import name.babu.qooa.model.Role;
 import name.babu.qooa.model.Tag;
-import name.babu.qooa.model.User;
+import name.babu.qooa.model.DTOUser;
 import name.babu.qooa.repository.PrivilegeRepository;
 import name.babu.qooa.repository.QARepository;
 import name.babu.qooa.repository.RoleRepository;
@@ -92,7 +92,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     Role adminRole = rolrep.findByName("ROLE_ADMIN");
     Set<Role> set = new HashSet<>(asList(adminRole));
-    User admin = new User();
+    DTOUser admin = new DTOUser();
     admin.setPassword("admin");
     admin.setUsername("admin");
     admin.setFirstName("Babu");
@@ -101,7 +101,7 @@ public class DatabaseLoader implements CommandLineRunner {
     admin.setRoles(set);
     this.userrep.save(admin);
 
-    User user = new User();
+    DTOUser user = new DTOUser();
     user.setPassword("user");
     user.setUsername("user");
     user.setFirstName("Franta");

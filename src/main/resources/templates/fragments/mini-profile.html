@@ -9,6 +9,18 @@
 <span class="mini-profile-user">
     <a href="/"><img id="user-mini-img" th:src="@{|/tmp/tmp-user.png|}" ></img></a>
     <!-- <span id="mini-reputation" h:text="${user.mini-reputation}"></span> -->
-    <span id="mini-reputation">12345</span>
+    <!-- IF CUSTOMER IS AUTENTICATED -->
+    <span th:if="${authenticated}">
+       <span id="mini-reputation" th:text="${user.username}">username</span>
+    </span>
+   <!-- ELSE -->
+   <span th:unless="${authenticated}">
+    <span th:replace="fragments/login-button::login-button"></span>
+   </span>
 </span>
+       <span th:if="${authenticated}">
+       <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+       </form>
+       </span>
 </span>

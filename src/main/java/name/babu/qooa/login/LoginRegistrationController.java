@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import name.babu.qooa.model.User;
+import name.babu.qooa.model.DTOUser;
 import name.babu.qooa.repository.RoleRepository;
 import name.babu.qooa.service.UserService;
 
@@ -31,12 +31,12 @@ public class LoginRegistrationController {
 
   @RequestMapping(value = "/registration", method = RequestMethod.GET)
   public String registration(Model model) {
-    model.addAttribute("userForm", new User());
+    model.addAttribute("userForm", new DTOUser());
     return "registration";
   }
 
   @RequestMapping(value = "/registration", method = RequestMethod.POST)
-  public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+  public String registration(@ModelAttribute("userForm") DTOUser userForm, BindingResult bindingResult, Model model) {
     regValidator.validate(userForm, bindingResult);
     if (bindingResult.hasErrors()) {
       model.addAttribute("error", bindingResult.getAllErrors());
@@ -46,7 +46,7 @@ public class LoginRegistrationController {
     userForm.setRoles(asList(roleRepository.findByName("ROLE_USER")));
     userService.save(userForm);
     securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
-    return "redirect:/hello";
+    return "redirect:/home";
   }
 
   @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -60,8 +60,4 @@ public class LoginRegistrationController {
     return "login";
   }
 
-  @RequestMapping(value = { "/", "/hello" }, method = RequestMethod.GET)
-  public String welcome(Model model) {
-    return "hello";
-  }
 }

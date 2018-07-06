@@ -17,7 +17,7 @@ public class Role {
 
   private Long id;
   private String name;
-  private Set<User> users;
+  private Set<DTOUser> users;
   private Set<Privilege> privileges;
 
   @ManyToMany
@@ -49,11 +49,11 @@ public class Role {
   }
 
   @ManyToMany(mappedBy = "roles")
-  public Set<User> getUsers() {
+  public Set<DTOUser> getUsers() {
     return users;
   }
 
-  public void setUsers(Set<User> users) {
+  public void setUsers(Set<DTOUser> users) {
     this.users = users;
   }
 }

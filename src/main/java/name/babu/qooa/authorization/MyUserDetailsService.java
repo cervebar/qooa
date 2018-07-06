@@ -1,7 +1,5 @@
 package name.babu.qooa.authorization;
 
-import static java.util.Arrays.asList;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import name.babu.qooa.model.Role;
-import name.babu.qooa.model.User;
+import name.babu.qooa.model.DTOUser;
 import name.babu.qooa.repository.RoleRepository;
 import name.babu.qooa.repository.UserRepository;
 
@@ -32,11 +30,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username);
+    DTOUser user = userRepository.findByUsername(username);
     if (user == null) {
-      // TODO proverit a pripadne dat pryc
-      return new org.springframework.security.core.userdetails.User(" ", " ", true, true, true, true,
-          getGrantedAuthorities(asList(roleRepository.findByName("ROLE_USER"))));
+      throw new UsernameNotFoundException("Username " + username + "not found");
     }
     // TODO add acount not expired ,credentials not expired etc...
     return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
