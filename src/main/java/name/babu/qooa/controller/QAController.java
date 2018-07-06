@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,6 +71,7 @@ public class QAController {
   }
 
   @PostMapping("ask")
+  @PreAuthorize("hasAuthority('WRITE_PRIVILEDGE')")
   public ModelAndView createQuestion(@ModelAttribute Question question) {
     // TODO hash id nejak rozumneji id
     byte[] encodedBytes = Base64.getEncoder().encode(question.getTitle().getBytes());

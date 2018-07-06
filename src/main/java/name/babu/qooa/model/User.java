@@ -1,6 +1,6 @@
 package name.babu.qooa.model;
 
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +20,58 @@ public class User {
   private String username;
   private String password;
   private String passwordConfirm;
-  private Set<Role> roles;
+  private Collection<Role> roles;
+
+  private String firstName;
+  private String lastName;
+  private String email;
+  private boolean enabled;
+  private boolean tokenExpired;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
+  }
+
+  public boolean isTokenExpired() {
+    return tokenExpired;
+  }
+
+  public void setTokenExpired(boolean tokenExpired) {
+    this.tokenExpired = tokenExpired;
   }
 
   public void setId(Long id) {
@@ -59,11 +105,11 @@ public class User {
 
   @ManyToMany
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  public Set<Role> getRoles() {
+  public Collection<Role> getRoles() {
     return roles;
   }
 
-  public void setRoles(Set<Role> roles) {
+  public void setRoles(Collection<Role> roles) {
     this.roles = roles;
   }
 }

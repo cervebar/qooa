@@ -1,5 +1,7 @@
 package name.babu.qooa.login;
 
+import static java.util.Arrays.asList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import name.babu.qooa.model.User;
+import name.babu.qooa.repository.RoleRepository;
 import name.babu.qooa.service.UserService;
 
 @Controller
@@ -22,6 +25,9 @@ public class LoginRegistrationController {
 
   @Autowired
   private RegistrationValidator regValidator;
+
+  @Autowired
+  private RoleRepository roleRepository;
 
   @RequestMapping(value = "/registration", method = RequestMethod.GET)
   public String registration(Model model) {
@@ -37,6 +43,7 @@ public class LoginRegistrationController {
       model.addAttribute("userForm", userForm);
       return "registration";
     }
+    userForm.setRoles(asList(roleRepository.findByName("ROLE_USER")));
     userService.save(userForm);
     securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
     return "redirect:/hello";

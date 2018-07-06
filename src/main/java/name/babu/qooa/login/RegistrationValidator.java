@@ -36,6 +36,7 @@ public class RegistrationValidator implements Validator {
         if (userService.findByUsername(user.getUsername()) != null) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
+    // TODO email exists
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
     if (user.getPassword().length() < MIN_PASSWORD_LENGH || user.getPassword().length() > MAX_PASSWORD_LENGH) {
             errors.rejectValue("password", "Size.userForm.password");
