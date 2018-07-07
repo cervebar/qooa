@@ -1,7 +1,10 @@
 package name.babu.qooa.model;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +30,14 @@ public class DTOUser {
   private String email;
   private boolean enabled;
   private boolean tokenExpired;
+
+  // votes --------------
+  private Set<String> votedUpQuestionIds = new HashSet<>();
+  private Set<String> votedDownQuestionIds = new HashSet<>();
+
+  public void setVotedDownQuestionIds(Set<String> votedDownQuestionIds) {
+    this.votedDownQuestionIds = votedDownQuestionIds;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -109,7 +120,37 @@ public class DTOUser {
     return roles;
   }
 
+  @ElementCollection
+  public Set<String> getVotedUpQuestionIds() {
+    return votedUpQuestionIds;
+  }
+
+  public void setVotedUpQuestionIds(Set<String> votedUpQuestionIds) {
+    this.votedUpQuestionIds = votedUpQuestionIds;
+  }
+
+  @ElementCollection
+  public Set<String> getVotedDownQuestionIds() {
+    return votedDownQuestionIds;
+  }
   public void setRoles(Collection<Role> roles) {
     this.roles = roles;
+  }
+
+  public void addVotedQuestions(String questionId) {
+    votedUpQuestionIds.add(questionId);
+  }
+
+  public void removeDownVotedQuestion(String questionId) {
+    votedDownQuestionIds.remove(questionId);
+
+  }
+
+  public void addDownvotedQuestion(String questionId) {
+    votedDownQuestionIds.add(questionId);
+  }
+
+  public void removeUpVotedQuestion(String questionId) {
+    votedUpQuestionIds.remove(questionId);
   }
 }

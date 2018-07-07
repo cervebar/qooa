@@ -6,7 +6,7 @@ import lombok.Data;
  * Used in question.html detail view, for up voting and down voting answers/question
  */
 @Data
-public class Upvote {
+public class VoteAction {
 
   private String type;
   private String id;

@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
           .antMatchers("/h2-console/*")
             .permitAll()
-            .antMatchers("/", "/home", "/login", "/logout", "/error", "/registration")
+          .antMatchers("/", "/home", "/login", "/logout", "/error", "/registration", "/questions")
             .permitAll()
           .antMatchers("/css/**")
             .permitAll()
