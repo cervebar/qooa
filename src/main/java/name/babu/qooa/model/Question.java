@@ -49,7 +49,15 @@ public class Question {
   public void setCreatedOn(Date createdOn) {
     this.createdOn = createdOn.getTime();
   }
-  
+
+  public void incrementVotes() {
+    this.voteCount++;
+  }
+
+  public void decrement() {
+    this.voteCount--;
+  }
+
   // author
   // tags
   // rules

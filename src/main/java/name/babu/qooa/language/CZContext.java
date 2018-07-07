@@ -11,6 +11,7 @@ public class CZContext extends LanguageContext {
     this.questionsText = "Otázky";
     this.topicsText = "Téma";
     this.usersText = "Komunita";
+    this.loginButtonText = "Přihlásit";
   }
 
 }

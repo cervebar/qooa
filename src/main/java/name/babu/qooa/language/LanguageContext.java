@@ -12,5 +12,6 @@ public class LanguageContext {
   protected String questionsText;
   protected String topicsText;
   protected String usersText;
+  protected String loginButtonText;
 
 }
