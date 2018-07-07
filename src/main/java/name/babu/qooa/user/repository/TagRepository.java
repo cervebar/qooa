@@ -1,9 +1,9 @@
-package name.babu.qooa.repository;
+package name.babu.qooa.user.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import name.babu.qooa.model.Tag;
+import name.babu.qooa.qa.model.Tag;
 
 /**
  * XXX TODO create javadoc

@@ -1,16 +1,4 @@
-/*
- * Copyright 2015 the original author or authors.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package name.babu.qooa;
+package name.babu.qooa.tmp;
 
 import static java.util.Arrays.asList;
 
@@ -26,16 +14,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import name.babu.qooa.model.Privilege;
-import name.babu.qooa.model.Question;
-import name.babu.qooa.model.Role;
-import name.babu.qooa.model.Tag;
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.repository.PrivilegeRepository;
-import name.babu.qooa.repository.QARepository;
-import name.babu.qooa.repository.RoleRepository;
-import name.babu.qooa.repository.TagRepository;
-import name.babu.qooa.service.UserService;
+import name.babu.qooa.qa.AnswerRepository;
+import name.babu.qooa.qa.QuestionRepository;
+import name.babu.qooa.qa.model.Answer;
+import name.babu.qooa.qa.model.Question;
+import name.babu.qooa.qa.model.Tag;
+import name.babu.qooa.user.DTOUser;
+import name.babu.qooa.user.Privilege;
+import name.babu.qooa.user.Role;
+import name.babu.qooa.user.UserService;
+import name.babu.qooa.user.repository.PrivilegeRepository;
+import name.babu.qooa.user.repository.RoleRepository;
+import name.babu.qooa.user.repository.TagRepository;
 
 /**
  * TODO : move test login into profile
@@ -43,15 +33,17 @@ import name.babu.qooa.service.UserService;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-  private final QARepository qas;
+  private final QuestionRepository qas;
   private final TagRepository tagr;
   private final UserService userrep;
   private final RoleRepository rolrep;
   @Autowired
   private PrivilegeRepository privilegeRepository;
+  @Autowired
+  private AnswerRepository answRepo;
 
   @Autowired
-  public DatabaseLoader(QARepository qas, TagRepository tagr, UserService userrep, RoleRepository rolrep) {
+  public DatabaseLoader(QuestionRepository qas, TagRepository tagr, UserService userrep, RoleRepository rolrep) {
     this.qas = qas;
     this.tagr = tagr;
     this.userrep = userrep;
@@ -60,8 +52,6 @@ public class DatabaseLoader implements CommandLineRunner {
 
   @Override
   public void run(String... strings) throws Exception {
-
-    // example quars
 
     List<Tag> tags1 = new ArrayList<>();
     List<Tag> tags2 = new ArrayList<>();
@@ -75,10 +65,20 @@ public class DatabaseLoader implements CommandLineRunner {
     tags1.add(t3);
     tags2.add(t1);
 
-    this.qas.save(new Question("headline1", "headline", "*some markdown content* heh",
-        Instant.now().toEpochMilli(), 12, 3, tags1));
-    this.qas.save(new Question("headline2", "headline2 a jeste k tomu tohle max XYZ znaku",
-        "*some markdown content* heh", Instant.now().toEpochMilli(), 2, 2, tags2));
+    Question q1 = new Question("headline1", "headline", "<b>some html content</b><div>kvak ,ble, kvak</div> heh",
+        Instant.now().toEpochMilli(), 12, tags1);
+    Question q2 = new Question("headline2", "headline2 a jeste k tomu tohle max XYZ znaku",
+        "<b>some html content</b><p>paragraph</p> heh", Instant.now().toEpochMilli(), 2, tags2);
+    this.qas.save(q1);
+    this.qas.save(q2);
+
+    Question q11 = qas.findOne("headline1");
+
+    Answer a1 = new Answer(q11, "This is my answer. <div>some content in DIV</div>");
+    Answer a2 = new Answer(q11, "This is my answer2. <div>some content in DIV</div>");
+    q11.addAnswer(a1);
+    q11.addAnswer(a2);
+    this.qas.save(q11);
 
     // autorization and authentication -------------------------------
 

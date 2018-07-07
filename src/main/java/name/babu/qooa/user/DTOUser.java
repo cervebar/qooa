@@ -1,4 +1,4 @@
-package name.babu.qooa.model;
+package name.babu.qooa.user;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -34,6 +34,8 @@ public class DTOUser {
   // votes --------------
   private Set<String> votedUpQuestionIds = new HashSet<>();
   private Set<String> votedDownQuestionIds = new HashSet<>();
+  private Set<String> downVotedAnswerIds = new HashSet<>();
+  private Set<String> upVotedAnswerIds = new HashSet<>();
 
   public void setVotedDownQuestionIds(Set<String> votedDownQuestionIds) {
     this.votedDownQuestionIds = votedDownQuestionIds;
@@ -153,4 +155,39 @@ public class DTOUser {
   public void removeUpVotedQuestion(String questionId) {
     votedUpQuestionIds.remove(questionId);
   }
+
+  @ElementCollection
+  public Set<String> getDownVotedAnswerIds() {
+    return downVotedAnswerIds;
+  }
+
+  @ElementCollection
+  public Set<String> getUpVotedAnswerIds() {
+    return upVotedAnswerIds;
+  }
+
+  public void addDowVotedAnswer(String answerId) {
+    downVotedAnswerIds.add(answerId);
+  }
+
+  public void removeUpVotedAnswer(String answerId) {
+    upVotedAnswerIds.remove(answerId);
+  }
+
+  public void addUpVotedAnswer(String answerId) {
+    upVotedAnswerIds.add(answerId);
+  }
+
+  public void removeDownVotedAnswer(String answerId) {
+    downVotedAnswerIds.remove(answerId);
+  }
+
+  public void setDownVotedAnswerIds(Set<String> downVotedAnswerIds) {
+    this.downVotedAnswerIds = downVotedAnswerIds;
+  }
+
+  public void setUpVotedAnswerIds(Set<String> upVotedAnswerIds) {
+    this.upVotedAnswerIds = upVotedAnswerIds;
+  }
+
 }

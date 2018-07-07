@@ -1,4 +1,4 @@
-package name.babu.qooa.model;
+package name.babu.qooa.qa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

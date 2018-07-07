@@ -1,4 +1,4 @@
-package name.babu.qooa.questions;
+package name.babu.qooa.qa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -6,16 +6,16 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.model.Question;
-import name.babu.qooa.repository.QARepository;
-import name.babu.qooa.repository.UserRepository;
+import name.babu.qooa.qa.model.Answer;
+import name.babu.qooa.qa.model.Question;
+import name.babu.qooa.user.DTOUser;
+import name.babu.qooa.user.repository.UserRepository;
 
 @Service
 public class QuestionService {
 
   @Autowired
-  private QARepository qas;
+  private QuestionRepository qas;
   @Autowired
   private UserRepository userRepo;
 
@@ -53,6 +53,18 @@ public class QuestionService {
     Question question = qas.findOne(questionId);
     question.decrement();
     qas.save(question);
+  }
+
+  @Transactional
+  public Question addAnswer(String questionId, String answerContent, String username) {
+    // TODO validate html content - no javascript, no not allowed html tags, etc, escape everything, be carefull
+    DTOUser user = userRepo.findByUsername(username);
+    Question relatedQuestion = qas.findOne(questionId);
+    Answer a = new Answer(relatedQuestion, answerContent);
+    relatedQuestion.addAnswer(a);
+    // TODO user
+    qas.save(relatedQuestion);
+    return relatedQuestion;
   }
 
 }

@@ -9,7 +9,7 @@
                   <th:block th:each="question : ${questions}">
                      <div class="question-home">
                         <div class="qs1" >
-                          <form action="#" th:action="@{|/questions/${question.id}/votes|}" th:object="${voteAction}" method="post" id="up-and-downvote-form-${question.id}">
+                          <form action="#" th:action="@{|/questions/${question.id}/votes|}" method="post" id="up-and-downvote-form-${question.id}">
                             <span><button type="submit" name="upvote" th:value="${question.id}"><i class="fas fa-chevron-up"></i></button></span>
                             <span th:text="${question.voteCount}"></span>
                             <span><button type="submit" name="downvote" th:value="${question.id}"><i class="fas fa-chevron-down"></i></button></span>

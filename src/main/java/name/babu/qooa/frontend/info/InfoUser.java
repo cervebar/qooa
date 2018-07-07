@@ -1,7 +1,7 @@
 package name.babu.qooa.frontend.info;
 
 import lombok.Value;
-import name.babu.qooa.model.DTOUser;
+import name.babu.qooa.user.DTOUser;
 
 @Value
 public class InfoUser {

@@ -140,16 +140,25 @@ width: 300px
    border-bottom: 1px solid grey;
 }
 
-/* q: question view ----------------------------------------------------- */
+/* qa: question view ----------------------------------------------------- */
 .qa-wrapper{
    display: flex;
-}
-.qa-upvotes{
-   width: 80px;
-   text-align: center;
-}
-.qa-upvotes table{
-    margin: auto;
+   align-items: center;
 }
 
+.qa-left{
+    max-width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.qa-content{
+   width:100%;
+}
+
+.qa-post-my-answer{
+  width:100%;
+}
 

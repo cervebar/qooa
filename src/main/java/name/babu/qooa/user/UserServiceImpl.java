@@ -1,4 +1,4 @@
-package name.babu.qooa.service;
+package name.babu.qooa.user;
 
 import java.util.HashSet;
 
@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.repository.RoleRepository;
-import name.babu.qooa.repository.UserRepository;
+import name.babu.qooa.user.repository.RoleRepository;
+import name.babu.qooa.user.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {

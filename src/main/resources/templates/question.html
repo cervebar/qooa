@@ -2,38 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/middle">
    <body>
       <div layout:fragment="middle-left-center">
+      <!-- QUESTION  ================================================================== -->
          <div class="qa-wrapper">
-            <div class="qa-upvotes">
-               <table>
-                  <tr>
-                     <td><button><i class="fas fa-chevron-up"></i></button></td>
-                  </tr>
-                  <tr>
-                     <td th:text="${question.voteCount}"></td>
-                  </tr>
-                  <tr>
-                     <td><button><i class="fas fa-chevron-down"></i></button></td>
-                  </tr>
-               </table>
+            <div class="qa-left">
+                 <form action="#" th:action="@{|/questions/${question.id}/votes|}"  method="post" id="up-and-downvote-form-${question.id}">
+                    <span><button type="submit" name="upvote" th:value="${question.id}"><i class="fas fa-chevron-up"></i></button></span>
+                    <span th:text="${question.voteCount}"></span>
+                    <span><button type="submit" name="downvote" th:value="${question.id}"><i class="fas fa-chevron-down"></i></button></span>
+                 </form>
             </div>
             <div class="qa-content">
-               <table>
-                  <th>
-                  <tr>
-                     <td th:text="${question.title}"></td>
-                     <td th:text="${question.content}"></td>
-                  </tr>
-                  kvak
-                  <tr>
-                     <td colspan="2" th:text="${question.createdOn}">...</td>
-                  </tr>
-                  </th>
-               </table>
+                     <div class="q-title"><h1 th:text="${question.title}"></h1></div>
+                     <div class="q-small-info">obrzaek, jmeno <span th:text="${question.createdOn}"></span>, tagy</div>
+                     <div class="q-description-area"><p th:utext="${question.content}"></p></div>
             </div>
          </div>
+      <!-- ANSWERS  ================================================================== -->
+      <th:block th:each="answer : ${answers}">
+         <div class="qa-wrapper">
+         <div class="qa-left">
+                 <form action="#" th:action="@{|/questions/${question.id}/answers/${answer.id}|}" method="post" id="up-and-downvote-form-${answer.id}">
+                    <span><button type="submit" name="upvote" th:value="${answer.id}"><i class="fas fa-chevron-up"></i></button></span>
+                    <span th:text="${answer.voteCount}"></span>
+                    <span><button type="submit" name="downvote" th:value="${answer.id}"><i class="fas fa-chevron-down"></i></button></span>
+                 </form>
+            </div>
+            <div class="qa-content">
+                     <div class="q-small-info">obrzaek, jmeno , created <span th:text="${answer.createdOn}"></span>, edited, tagy</div>
+                     <div class="q-description-area"><p th:utext="${answer.content}"></p></div>
+            </div>
+         </div>
+      </th:block>
+      <!-- POST MY ANSWER  ================================================================== -->
+      <div class="qa-post-my-answer">
+         <form action="#" th:action="@{|/questions/${question.id}/answers|}" th:object="${answerForm}"  method="post" id="post-my-answer">
+         TODO - here put Javascript wysiwsg
+             <div>
+               <textarea th:field="*{content}" form="post-my-answer"></textarea>
+             </div>
+             <div>select TAG area</div>
+             <p><input type="submit" value="Submit" /></p>
+         </form>
+      </div>
       </div>
       <div layout:fragment="middle-right-center">
-         kvak
+         napravo
       </div>
    </body>
 </html>

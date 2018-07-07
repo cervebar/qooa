@@ -1,4 +1,4 @@
-package name.babu.qooa.authorization;
+package name.babu.qooa.login;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,10 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import name.babu.qooa.model.Role;
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.repository.RoleRepository;
-import name.babu.qooa.repository.UserRepository;
+import name.babu.qooa.user.DTOUser;
+import name.babu.qooa.user.Role;
+import name.babu.qooa.user.repository.RoleRepository;
+import name.babu.qooa.user.repository.UserRepository;
 
 @Service("userDetailsService")
 @Transactional

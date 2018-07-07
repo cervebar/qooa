@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.repository.RoleRepository;
-import name.babu.qooa.service.UserService;
+import name.babu.qooa.user.DTOUser;
+import name.babu.qooa.user.UserService;
+import name.babu.qooa.user.repository.RoleRepository;
 
 @Controller
 public class LoginRegistrationController {

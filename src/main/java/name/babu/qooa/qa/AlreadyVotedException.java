@@ -1,4 +1,4 @@
-package name.babu.qooa.questions;
+package name.babu.qooa.qa;
 
 import name.babu.qooa.common.QooaException;
 

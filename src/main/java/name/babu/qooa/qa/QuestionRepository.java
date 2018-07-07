@@ -1,14 +1,11 @@
-package name.babu.qooa.repository;
+package name.babu.qooa.qa;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import name.babu.qooa.model.Question;
+import name.babu.qooa.qa.model.Question;
 
-/**
- * XXX TODO create javadoc
- */
-public interface QARepository extends PagingAndSortingRepository<Question, String> {
+public interface QuestionRepository extends PagingAndSortingRepository<Question, String> {
 
   @Override
   Question save(@Param("question") Question q);

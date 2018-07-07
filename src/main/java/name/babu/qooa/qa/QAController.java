@@ -1,4 +1,4 @@
-package name.babu.qooa.controller;
+package name.babu.qooa.qa;
 
 import java.util.Base64;
 import java.util.Date;
@@ -21,17 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import name.babu.qooa.frontend.info.AnswerForm;
 import name.babu.qooa.frontend.info.InfoUser;
 import name.babu.qooa.language.LanguageService;
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.model.Question;
-import name.babu.qooa.model.forms.VoteAction;
-import name.babu.qooa.questions.AlreadyDownVotedException;
-import name.babu.qooa.questions.AlreadyVotedException;
-import name.babu.qooa.questions.QuestionService;
-import name.babu.qooa.repository.QARepository;
-import name.babu.qooa.repository.UserRepository;
+import name.babu.qooa.qa.model.Question;
 import name.babu.qooa.skin.SkinService;
+import name.babu.qooa.user.DTOUser;
+import name.babu.qooa.user.repository.UserRepository;
 
 @Controller
 @RequestMapping("")
@@ -39,23 +35,26 @@ public class QAController {
 
   private static final Logger LOG = Logger.getLogger(QAController.class);
 
-  private final QARepository qas;
+  private final QuestionRepository qas;
   private final QuestionService questionService;
   private final LanguageService lang;
   private final SkinService skin;
   private final UserRepository userRepo;
 
+  private AnswerService answerService;
+
   @Autowired
-  public QAController(QARepository qas,
+  public QAController(QuestionRepository qas,
                       LanguageService lang,
                       SkinService skin,
                       UserRepository userRepo,
-                      QuestionService questionService) {
+                      QuestionService questionService, AnswerService answerService) {
     this.qas = qas;
     this.lang = lang;
     this.skin = skin;
     this.userRepo = userRepo;
     this.questionService = questionService;
+    this.answerService = answerService;
   }
 
 
@@ -65,14 +64,6 @@ public class QAController {
     model.addAttribute("questions", questions);
     addContextInfo(model);
     return "home";
-  }
-
-  @GetMapping("questions/{questionId}")
-  public String questionDetail(@PathVariable String questionId, Model model) {
-    model.addAttribute("question", qas.findOne(questionId));
-    addContextInfo(model);
-    model.addAttribute("upvote", new VoteAction());
-    return "question";
   }
 
   @PostMapping(value = "questions/{questionId}/votes", params = { "upvote" })
@@ -110,7 +101,7 @@ public class QAController {
 
   @PostMapping("ask")
   public ModelAndView createQuestion(@ModelAttribute Question question) {
-    // TODO hash id nejak rozumneji id
+    // TODO hash id nejak rozumneji id a pres service
     byte[] encodedBytes = Base64.getEncoder().encode(question.getTitle().getBytes());
     String id = new String(encodedBytes);
     question.setId(id);
@@ -124,7 +115,62 @@ public class QAController {
     return new ModelAndView("redirect:/questions/" + id);
   }
 
+  // one question view -----------------------------------------------------
+  @GetMapping("questions/{questionId}")
+  public String questionDetail(@PathVariable String questionId, Model model) {
+    Question question = qas.findOne(questionId);
+    model.addAttribute("question", question);
+    model.addAttribute("answers", question.getAnswers());
+    model.addAttribute("answerForm", new AnswerForm());
+    addContextInfo(model);
+    return "question";
+  }
+
+  @PostMapping(value = "/questions/{questionId}/answers/{answerId}", params = { "downvote" })
+  @PreAuthorize("isAuthenticated()")
+  // TODO has role, has reputation ... or some rule if he may downvote
+  public String downvoteAnswer(@PathVariable String questionId, @PathVariable String answerId) {
+    try {
+      answerService.downvote(answerId);
+    } catch (AlreadyDownVotedException e) {
+      // TODO
+      LOG.info("CREATE Error handel for down vote");
+      e.printStackTrace();
+    }
+    return "redirect:/questions/" + questionId;
+    // TODO return to # hover on correct answerid #answer1234
+  }
+
+  @PostMapping(value = "/questions/{questionId}/answers/{answerId}", params = { "upvote" })
+  @PreAuthorize("isAuthenticated()")
+  public String upVoteAnswer(@PathVariable String questionId, @PathVariable String answerId) {
+    try {
+      answerService.upvote(answerId);
+    } catch (AlreadyVotedException e) {
+      // TODO
+      LOG.info("CREATE Error handel for down vote");
+      e.printStackTrace();
+    }
+    return "redirect:/questions/" + questionId;
+    // TODO return to # hover on correct answerid #answer1234
+  }
+
+  @PostMapping("questions/{questionId}/answers")
+  public String addAnswer(@PathVariable String questionId, Model model, @ModelAttribute AnswerForm answerForm) {
+    LOG.info("kvak" + answerForm.getContent());
+    Question question = questionService.addAnswer(questionId, answerForm.getContent(), getSessionUserName());
+    model.addAttribute("question", question);
+    model.addAttribute("answers", question.getAnswers());
+    model.addAttribute("answerForm", new AnswerForm());
+    addContextInfo(model);
+    return "question";
+  }
+
   // helping functions -----------------------------------------------------
+
+  private String getSessionUserName() {
+    return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+  }
 
   private void addContextInfo(Model model) {
     // context --------------------------------------
@@ -139,8 +185,6 @@ public class QAController {
       InfoUser infoUser = new InfoUser(user);
       model.addAttribute("user", infoUser);
     }
-    // froms ---------------------------------------
-    model.addAttribute("vote", new VoteAction());
     // model.addAttribute("user", skin.getSkin());// user.mini-reputation
   }
 

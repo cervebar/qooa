@@ -1,4 +1,4 @@
-package name.babu.qooa.model;
+package name.babu.qooa.user;
 
 import java.util.Set;
 

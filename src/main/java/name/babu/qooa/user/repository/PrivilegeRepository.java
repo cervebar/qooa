@@ -1,8 +1,8 @@
-package name.babu.qooa.repository;
+package name.babu.qooa.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import name.babu.qooa.model.Privilege;
+import name.babu.qooa.user.Privilege;
 
 public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
 

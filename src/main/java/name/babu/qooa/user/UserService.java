@@ -1,6 +1,4 @@
-package name.babu.qooa.service;
-
-import name.babu.qooa.model.DTOUser;
+package name.babu.qooa.user;
 
 public interface UserService {
 

@@ -6,8 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import name.babu.qooa.model.DTOUser;
-import name.babu.qooa.service.UserService;
+import name.babu.qooa.user.DTOUser;
+import name.babu.qooa.user.UserService;
 
 @Component
 public class RegistrationValidator implements Validator {
