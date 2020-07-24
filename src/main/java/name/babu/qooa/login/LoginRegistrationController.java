@@ -44,6 +44,7 @@ public class LoginRegistrationController {
       return "registration";
     }
     userForm.setRoles(asList(roleRepository.findByName("ROLE_USER")));
+    userForm.setEnabled(true);
     userService.save(userForm);
     securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
     return "redirect:/home";
