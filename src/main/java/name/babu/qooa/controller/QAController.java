@@ -69,7 +69,7 @@ public class QAController {
 
   @GetMapping("questions/{questionId}")
   public String questionDetail(@PathVariable String questionId, Model model) {
-    model.addAttribute("question", qas.findOne(questionId));
+    model.addAttribute("question", qas.findById(questionId).get());
     addContextInfo(model);
     model.addAttribute("upvote", new VoteAction());
     return "question";

@@ -32,7 +32,7 @@ public class QuestionService {
     user.removeDownVotedQuestion(questionId);
     userRepo.save(user);
     // increment ------------------------------
-    Question question = qas.findOne(questionId);
+    Question question = qas.findById(questionId).get();
     question.incrementVotes();
     qas.save(question);
   }
@@ -50,7 +50,7 @@ public class QuestionService {
     user.removeUpVotedQuestion(questionId);
     userRepo.save(user);
     // decrement -------------------------------
-    Question question = qas.findOne(questionId);
+    Question question = qas.findById(questionId).get();
     question.decrement();
     qas.save(question);
   }
